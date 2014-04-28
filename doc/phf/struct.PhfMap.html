@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The phf library documentation.">
+
+    <title>phf::PhfMap - Rust</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro:400,600'
+          rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="../main.css">
+
+    
+</head>
+<body>
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    <section class="sidebar">
+        
+
+        <p class='location'><a href='index.html'>phf</a></p><div class='block struct'><h2>Structs</h2><a class='struct current' href='struct.PhfMap.html'>PhfMap</a><br/><a class='struct ' href='struct.PhfMapEntries.html'>PhfMapEntries</a><br/><a class='struct ' href='struct.PhfMapKeys.html'>PhfMapKeys</a><br/><a class='struct ' href='struct.PhfMapValues.html'>PhfMapValues</a><br/><a class='struct ' href='struct.PhfOrderedMap.html'>PhfOrderedMap</a><br/><a class='struct ' href='struct.PhfOrderedMapEntries.html'>PhfOrderedMapEntries</a><br/><a class='struct ' href='struct.PhfOrderedMapKeys.html'>PhfOrderedMapKeys</a><br/><a class='struct ' href='struct.PhfOrderedMapValues.html'>PhfOrderedMapValues</a><br/><a class='struct ' href='struct.PhfOrderedSet.html'>PhfOrderedSet</a><br/><a class='struct ' href='struct.PhfOrderedSetValues.html'>PhfOrderedSetValues</a><br/><a class='struct ' href='struct.PhfSet.html'>PhfSet</a><br/><a class='struct ' href='struct.PhfSetValues.html'>PhfSetValues</a><br/></div>
+    </section>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Search documentation..."
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'>Struct <a href='index.html'>phf</a>::<a class='struct' href=''>PhfMap</a><a class='source' href='../src/phf/src/phf.rs.html#38-47'>[src]</a></h1>
+<pre class='rust struct'>pub struct PhfMap&lt;T&gt; {
+}</pre><div class='docblock'><p>An immutable map constructed at compile time.</p>
+
+<p><code>PhfMap</code>s may be created with the <code>phf_map</code> macro:</p>
+<pre class='rust '>
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>phf</span>;
+<span class='attribute'>#[<span class='ident'>phase</span>(<span class='ident'>syntax</span>)]</span>
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>phf_mac</span>;
+
+<span class='kw'>use</span> <span class='ident'>phf</span>::<span class='ident'>PhfMap</span>;
+
+<span class='kw'>static</span> <span class='ident'>my_map</span>: <span class='ident'>PhfMap</span><span class='op'>&lt;</span><span class='ident'>int</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='macro'>phf_map</span><span class='macro'>!</span> {
+   <span class='string'>&quot;hello&quot;</span> <span class='op'>=&gt;</span> <span class='number'>10</span>,
+   <span class='string'>&quot;world&quot;</span> <span class='op'>=&gt;</span> <span class='number'>11</span>,
+};
+</pre>
+
+<h1 id="note" class='section-link'><a
+                           href="#note">Note</a></h1>
+<p>The fields of this struct are public so that they may be initialized by the
+<code>phf_map</code> macro. They are subject to change at any time and should never
+be accessed directly.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl&lt;T&gt; <a class='struct' href='../phf/struct.PhfMap.html' title='phf::PhfMap'>PhfMap</a>&lt;T&gt;</code></h3><div class='methods'><h4 id='method.find_key' class='method'><code>fn <a href='#method.find_key' class='fnname'>find_key</a>(&amp;self, key: &amp;&amp;str) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/option/enum.Option.html' title='std::option::Option'>Option</a>&lt;&amp;'static str&gt;</code></h4>
+<div class='docblock'><p>Returns a reference to the map&#39;s internal static instance of the given
+key.</p>
+
+<p>This can be useful for interning schemes.</p>
+</div><h4 id='method.entries' class='method'><code>fn <a href='#method.entries' class='fnname'>entries</a>&lt;'a&gt;(&amp;'a self) -&gt; <a class='struct' href='../phf/struct.PhfMapEntries.html' title='phf::PhfMapEntries'>PhfMapEntries</a>&lt;'a, T&gt;</code></h4>
+<div class='docblock'><p>Returns an iterator over the key/value pairs in the map.</p>
+
+<p>Entries are retuned in an arbitrary but fixed order.</p>
+</div><h4 id='method.keys' class='method'><code>fn <a href='#method.keys' class='fnname'>keys</a>&lt;'a&gt;(&amp;'a self) -&gt; <a class='struct' href='../phf/struct.PhfMapKeys.html' title='phf::PhfMapKeys'>PhfMapKeys</a>&lt;'a, T&gt;</code></h4>
+<div class='docblock'><p>Returns an iterator over the keys in the map.</p>
+
+<p>Keys are returned in an arbitrary but fixed order.</p>
+</div><h4 id='method.values' class='method'><code>fn <a href='#method.values' class='fnname'>values</a>&lt;'a&gt;(&amp;'a self) -&gt; <a class='struct' href='../phf/struct.PhfMapValues.html' title='phf::PhfMapValues'>PhfMapValues</a>&lt;'a, T&gt;</code></h4>
+<div class='docblock'><p>Returns an iterator over the values in the map.</p>
+
+<p>Values are returned in an arbitrary but fixed order.</p>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;T&gt; <a class='trait' href='http://static.rust-lang.org/doc/master/std/container/trait.Container.html' title='std::container::Container'>Container</a> for <a class='struct' href='../phf/struct.PhfMap.html' title='phf::PhfMap'>PhfMap</a>&lt;T&gt;</code></h3><div class='methods'><h4 id='method.len' class='method'><code>fn <a href='#method.len' class='fnname'>len</a>(&amp;self) -&gt; uint</code></h4>
+</div><h3 class='impl'><code>impl&lt;'a, T&gt; <a class='trait' href='http://static.rust-lang.org/doc/master/std/container/trait.Map.html' title='std::container::Map'>Map</a>&lt;&amp;'a str, T&gt; for <a class='struct' href='../phf/struct.PhfMap.html' title='phf::PhfMap'>PhfMap</a>&lt;T&gt;</code></h3><div class='methods'><h4 id='method.find' class='method'><code>fn <a href='#method.find' class='fnname'>find</a>&lt;'a&gt;(&amp;'a self, key: &amp;&amp;str) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/option/enum.Option.html' title='std::option::Option'>Option</a>&lt;&amp;'a T&gt;</code></h4>
+</div><h3 class='impl'><code>impl&lt;T: <a class='trait' href='http://static.rust-lang.org/doc/master/std/fmt/trait.Show.html' title='std::fmt::Show'>Show</a>&gt; <a class='trait' href='http://static.rust-lang.org/doc/master/std/fmt/trait.Show.html' title='std::fmt::Show'>Show</a> for <a class='struct' href='../phf/struct.PhfMap.html' title='phf::PhfMap'>PhfMap</a>&lt;T&gt;</code></h3><div class='methods'><h4 id='method.fmt' class='method'><code>fn <a href='#method.fmt' class='fnname'>fmt</a>(&amp;self, fmt: &amp;mut <a class='struct' href='http://static.rust-lang.org/doc/master/std/fmt/struct.Formatter.html' title='std::fmt::Formatter'>Formatter</a>) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/fmt/enum.Result.html' title='std::fmt::Result'>Result</a></code></h4>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <div id="help" class="hidden">
+        <div class="shortcuts">
+            <h1>Keyboard shortcuts</h1>
+            <dl>
+                <dt>?</dt>
+                <dd>Show this help dialog</dd>
+                <dt>S</dt>
+                <dd>Focus the search field</dd>
+                <dt>&uarr;</dt>
+                <dd>Move up in search results</dd>
+                <dt>&darr;</dt>
+                <dd>Move down in search results</dd>
+                <dt>&#9166;</dt>
+                <dd>Go to active search result</dd>
+            </dl>
+        </div>
+        <div class="infos">
+            <h1>Search tricks</h1>
+            <p>
+                Prefix searches with a type followed by a colon (e.g.
+                <code>fn:</code>) to restrict the search to a given type.
+            </p>
+            <p>
+                Accepted types are: <code>fn</code>, <code>mod</code>,
+                <code>struct</code> (or <code>str</code>), <code>enum</code>,
+                <code>trait</code>, <code>typedef</code> (or
+                <code>tdef</code>).
+            </p>
+        </div>
+    </div>
+
+    <script>
+        var rootPath = "../";
+        var currentCrate = "phf";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    <script async src="../search-index.js"></script>
+</body>
+</html>
