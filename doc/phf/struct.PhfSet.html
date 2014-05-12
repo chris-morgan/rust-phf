@@ -41,6 +41,7 @@
     <section id='main' class="content struct">
 <h1 class='fqn'>Struct <a href='index.html'>phf</a>::<a class='struct' href=''>PhfSet</a><a class='source' href='../src/phf/src/phf.rs.html#211-214'>[src]</a></h1>
 <pre class='rust struct'>pub struct PhfSet {
+    // some fields omitted
 }</pre><div class='docblock'><p>An immutable set constructed at compile time.</p>
 
 <p><code>PhfSet</code>s may be created with the <code>phf_set</code> macro:</p>
@@ -57,12 +58,12 @@
 };
 </pre>
 
-<h1 id="note" class='section-link'><a
+<h1 id="note" class='section-header'><a
                            href="#note">Note</a></h1>
 <p>The fields of this struct are public so that they may be initialized by the
 <code>phf_set</code> macro. They are subject to change at any time and should never be
 accessed directly.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../phf/struct.PhfSet.html' title='phf::PhfSet'>PhfSet</a></code></h3><div class='methods'><h4 id='method.find_key' class='method'><code>fn <a href='#method.find_key' class='fnname'>find_key</a>(&amp;self, key: &amp;&amp;str) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/option/enum.Option.html' title='std::option::Option'>Option</a>&lt;&amp;'static str&gt;</code></h4>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../phf/struct.PhfSet.html' title='phf::PhfSet'>PhfSet</a></code></h3><div class='methods'><h4 id='method.find_key' class='method'><code>fn <a href='#method.find_key' class='fnname'>find_key</a>(&amp;self, key: &amp;&amp;str) -&gt; <a class='type' href='http://static.rust-lang.org/doc/master/core/option/type.Option.html' title='core::option::Option'>Option</a>&lt;&amp;'static str&gt;</code></h4>
 <div class='docblock'><p>Returns a reference to the set&#39;s internal static instance of the given
 key.</p>
 
@@ -71,12 +72,7 @@ key.</p>
 <div class='docblock'><p>Returns an iterator over the values in the set.</p>
 
 <p>Values are returned in an arbitrary but fixed order.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='http://static.rust-lang.org/doc/master/std/fmt/trait.Show.html' title='std::fmt::Show'>Show</a> for <a class='struct' href='../phf/struct.PhfSet.html' title='phf::PhfSet'>PhfSet</a></code></h3><div class='methods'><h4 id='method.fmt' class='method'><code>fn <a href='#method.fmt' class='fnname'>fmt</a>(&amp;self, fmt: &amp;mut <a class='struct' href='http://static.rust-lang.org/doc/master/std/fmt/struct.Formatter.html' title='std::fmt::Formatter'>Formatter</a>) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/std/fmt/enum.Result.html' title='std::fmt::Result'>Result</a></code></h4>
-</div><h3 class='impl'><code>impl <a class='trait' href='http://static.rust-lang.org/doc/master/std/container/trait.Container.html' title='std::container::Container'>Container</a> for <a class='struct' href='../phf/struct.PhfSet.html' title='phf::PhfSet'>PhfSet</a></code></h3><div class='methods'><h4 id='method.len' class='method'><code>fn <a href='#method.len' class='fnname'>len</a>(&amp;self) -&gt; uint</code></h4>
-</div><h3 class='impl'><code>impl&lt;'a&gt; <a class='trait' href='http://static.rust-lang.org/doc/master/std/container/trait.Set.html' title='std::container::Set'>Set</a>&lt;&amp;'a str&gt; for <a class='struct' href='../phf/struct.PhfSet.html' title='phf::PhfSet'>PhfSet</a></code></h3><div class='methods'><h4 id='method.contains' class='method'><code>fn <a href='#method.contains' class='fnname'>contains</a>(&amp;self, value: &amp;&amp;'a str) -&gt; bool</code></h4>
-<h4 id='method.is_disjoint' class='method'><code>fn <a href='#method.is_disjoint' class='fnname'>is_disjoint</a>(&amp;self, other: &amp;<a class='struct' href='../phf/struct.PhfSet.html' title='phf::PhfSet'>PhfSet</a>) -&gt; bool</code></h4>
-<h4 id='method.is_subset' class='method'><code>fn <a href='#method.is_subset' class='fnname'>is_subset</a>(&amp;self, other: &amp;<a class='struct' href='../phf/struct.PhfSet.html' title='phf::PhfSet'>PhfSet</a>) -&gt; bool</code></h4>
-</div></section>
+</div></div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
