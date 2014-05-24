@@ -824,7 +824,7 @@
 
     <span class='kw'>let</span> <span class='ident'>k1</span> <span class='op'>=</span> <span class='ident'>state</span>.<span class='ident'>k1</span>;
     <span class='kw'>let</span> <span class='ident'>k2</span> <span class='op'>=</span> <span class='ident'>state</span>.<span class='ident'>k2</span>;
-    <span class='ident'>MacExpr</span>::<span class='ident'>new</span>(<span class='macro'>quote_expr</span><span class='macro'>!</span>(<span class='ident'>cx</span>, <span class='ident'>PhfMap</span> {
+    <span class='ident'>MacExpr</span>::<span class='ident'>new</span>(<span class='macro'>quote_expr</span><span class='macro'>!</span>(<span class='ident'>cx</span>, ::<span class='ident'>phf</span>::<span class='ident'>PhfMap</span> {
         <span class='ident'>k1</span>: <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>k1</span>,
         <span class='ident'>k2</span>: <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>k2</span>,
         <span class='ident'>disps</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>disps</span>,
@@ -835,7 +835,7 @@
 <span class='kw'>fn</span> <span class='ident'>create_set</span>(<span class='ident'>cx</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ExtCtxt</span>, <span class='ident'>sp</span>: <span class='ident'>Span</span>, <span class='ident'>entries</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Entry</span><span class='op'>&gt;</span>, <span class='ident'>state</span>: <span class='ident'>HashState</span>)
               <span class='op'>-&gt;</span> <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>MacResult</span><span class='op'>&gt;</span> {
     <span class='kw'>let</span> <span class='ident'>map</span> <span class='op'>=</span> <span class='ident'>create_map</span>(<span class='ident'>cx</span>, <span class='ident'>sp</span>, <span class='ident'>entries</span>, <span class='ident'>state</span>).<span class='ident'>make_expr</span>().<span class='ident'>unwrap</span>();
-    <span class='ident'>MacExpr</span>::<span class='ident'>new</span>(<span class='macro'>quote_expr</span><span class='macro'>!</span>(<span class='ident'>cx</span>, <span class='ident'>PhfSet</span> { <span class='ident'>map</span>: <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>map</span> }))
+    <span class='ident'>MacExpr</span>::<span class='ident'>new</span>(<span class='macro'>quote_expr</span><span class='macro'>!</span>(<span class='ident'>cx</span>, ::<span class='ident'>phf</span>::<span class='ident'>PhfSet</span> { <span class='ident'>map</span>: <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>map</span> }))
 }
 
 <span class='kw'>fn</span> <span class='ident'>create_ordered_map</span>(<span class='ident'>cx</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ExtCtxt</span>, <span class='ident'>sp</span>: <span class='ident'>Span</span>, <span class='ident'>entries</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Entry</span><span class='op'>&gt;</span>,
@@ -855,7 +855,7 @@
 
     <span class='kw'>let</span> <span class='ident'>k1</span> <span class='op'>=</span> <span class='ident'>state</span>.<span class='ident'>k1</span>;
     <span class='kw'>let</span> <span class='ident'>k2</span> <span class='op'>=</span> <span class='ident'>state</span>.<span class='ident'>k2</span>;
-    <span class='ident'>MacExpr</span>::<span class='ident'>new</span>(<span class='macro'>quote_expr</span><span class='macro'>!</span>(<span class='ident'>cx</span>, <span class='ident'>PhfOrderedMap</span> {
+    <span class='ident'>MacExpr</span>::<span class='ident'>new</span>(<span class='macro'>quote_expr</span><span class='macro'>!</span>(<span class='ident'>cx</span>, ::<span class='ident'>phf</span>::<span class='ident'>PhfOrderedMap</span> {
         <span class='ident'>k1</span>: <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>k1</span>,
         <span class='ident'>k2</span>: <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>k2</span>,
         <span class='ident'>disps</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>disps</span>,
@@ -867,7 +867,7 @@
 <span class='kw'>fn</span> <span class='ident'>create_ordered_set</span>(<span class='ident'>cx</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ExtCtxt</span>, <span class='ident'>sp</span>: <span class='ident'>Span</span>, <span class='ident'>entries</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Entry</span><span class='op'>&gt;</span>,
                       <span class='ident'>state</span>: <span class='ident'>HashState</span>) <span class='op'>-&gt;</span> <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>MacResult</span><span class='op'>&gt;</span> {
     <span class='kw'>let</span> <span class='ident'>map</span> <span class='op'>=</span> <span class='ident'>create_ordered_map</span>(<span class='ident'>cx</span>, <span class='ident'>sp</span>, <span class='ident'>entries</span>, <span class='ident'>state</span>).<span class='ident'>make_expr</span>().<span class='ident'>unwrap</span>();
-    <span class='ident'>MacExpr</span>::<span class='ident'>new</span>(<span class='macro'>quote_expr</span><span class='macro'>!</span>(<span class='ident'>cx</span>, <span class='ident'>PhfOrderedSet</span> { <span class='ident'>map</span>: <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>map</span> }))
+    <span class='ident'>MacExpr</span>::<span class='ident'>new</span>(<span class='macro'>quote_expr</span><span class='macro'>!</span>(<span class='ident'>cx</span>, ::<span class='ident'>phf</span>::<span class='ident'>PhfOrderedSet</span> { <span class='ident'>map</span>: <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>map</span> }))
 }
 
 <span class='kw'>fn</span> <span class='ident'>create_slice_expr</span>(<span class='ident'>vec</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='kw-2'>@</span><span class='ident'>Expr</span><span class='op'>&gt;</span>, <span class='ident'>sp</span>: <span class='ident'>Span</span>) <span class='op'>-&gt;</span> <span class='kw-2'>@</span><span class='ident'>Expr</span> {
