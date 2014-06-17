@@ -23,7 +23,6 @@
 
     <section class="sidebar">
         
-
         
     </section>
 
@@ -451,15 +450,6 @@
 <span id='411'>411</span>
 <span id='412'>412</span>
 <span id='413'>413</span>
-<span id='414'>414</span>
-<span id='415'>415</span>
-<span id='416'>416</span>
-<span id='417'>417</span>
-<span id='418'>418</span>
-<span id='419'>419</span>
-<span id='420'>420</span>
-<span id='421'>421</span>
-<span id='422'>422</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Compiler plugin for Rust-PHF
 </span><span class='doccomment'>//!
@@ -467,55 +457,46 @@
 </span><span class='attribute'>#<span class='op'>!</span>[<span class='ident'>crate_id</span><span class='op'>=</span><span class='string'>&quot;github.com/sfackler/rust-phf/phf_mac&quot;</span>]</span>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>crate_type</span><span class='op'>=</span><span class='string'>&quot;dylib&quot;</span>]</span>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>doc</span>(<span class='ident'>html_root_url</span><span class='op'>=</span><span class='string'>&quot;http://sfackler.github.io/rust-phf/doc&quot;</span>)]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>feature</span>(<span class='ident'>managed_boxes</span>, <span class='ident'>macro_registrar</span>, <span class='ident'>quote</span>)]</span>
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>feature</span>(<span class='ident'>plugin_registrar</span>, <span class='ident'>quote</span>)]</span>
 
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rand</span>;
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>syntax</span>;
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>time</span>;
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>phf</span>;
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rustc</span>;
 
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>HashMap</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>gc</span>::{<span class='ident'>Gc</span>, <span class='ident'>GC</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>os</span>;
 <span class='kw'>use</span> <span class='ident'>syntax</span>::<span class='ident'>ast</span>;
-<span class='kw'>use</span> <span class='ident'>syntax</span>::<span class='ident'>ast</span>::{<span class='ident'>Name</span>, <span class='ident'>TokenTree</span>, <span class='ident'>LitStr</span>, <span class='ident'>Expr</span>, <span class='ident'>ExprVec</span>, <span class='ident'>ExprLit</span>};
+<span class='kw'>use</span> <span class='ident'>syntax</span>::<span class='ident'>ast</span>::{<span class='ident'>TokenTree</span>, <span class='ident'>LitStr</span>, <span class='ident'>Expr</span>, <span class='ident'>ExprVec</span>, <span class='ident'>ExprLit</span>};
 <span class='kw'>use</span> <span class='ident'>syntax</span>::<span class='ident'>codemap</span>::<span class='ident'>Span</span>;
-<span class='kw'>use</span> <span class='ident'>syntax</span>::<span class='ident'>ext</span>::<span class='ident'>base</span>::{<span class='ident'>SyntaxExtension</span>,
-                        <span class='ident'>DummyResult</span>,
+<span class='kw'>use</span> <span class='ident'>syntax</span>::<span class='ident'>ext</span>::<span class='ident'>base</span>::{<span class='ident'>DummyResult</span>,
                         <span class='ident'>ExtCtxt</span>,
                         <span class='ident'>MacResult</span>,
-                        <span class='ident'>MacExpr</span>,
-                        <span class='ident'>NormalTT</span>,
-                        <span class='ident'>BasicMacroExpander</span>};
+                        <span class='ident'>MacExpr</span>};
 <span class='kw'>use</span> <span class='ident'>syntax</span>::<span class='ident'>parse</span>;
-<span class='kw'>use</span> <span class='ident'>syntax</span>::<span class='ident'>parse</span>::<span class='ident'>token</span>;
 <span class='kw'>use</span> <span class='ident'>syntax</span>::<span class='ident'>parse</span>::<span class='ident'>token</span>::{<span class='ident'>InternedString</span>, <span class='ident'>COMMA</span>, <span class='ident'>EOF</span>, <span class='ident'>FAT_ARROW</span>};
 <span class='kw'>use</span> <span class='ident'>rand</span>::{<span class='ident'>Rng</span>, <span class='ident'>SeedableRng</span>, <span class='ident'>XorShiftRng</span>};
+<span class='kw'>use</span> <span class='ident'>rustc</span>::<span class='ident'>plugin</span>::<span class='ident'>Registry</span>;
 
 <span class='kw'>static</span> <span class='ident'>DEFAULT_LAMBDA</span>: <span class='ident'>uint</span> <span class='op'>=</span> <span class='number'>5</span>;
 
 <span class='kw'>static</span> <span class='ident'>FIXED_SEED</span>: [<span class='ident'>u32</span>, ..<span class='number'>4</span>] <span class='op'>=</span> [<span class='number'>3141592653</span>, <span class='number'>589793238</span>, <span class='number'>462643383</span>, <span class='number'>2795028841</span>];
 
-<span class='attribute'>#[<span class='ident'>macro_registrar</span>]</span>
+<span class='attribute'>#[<span class='ident'>plugin_registrar</span>]</span>
 <span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>macro_registrar</span>(<span class='ident'>register</span>: <span class='op'>|</span><span class='ident'>Name</span>, <span class='ident'>SyntaxExtension</span><span class='op'>|</span>) {
-    <span class='kw'>let</span> <span class='ident'>reg</span> <span class='op'>=</span> <span class='op'>|</span><span class='ident'>name</span>, <span class='ident'>fn_</span><span class='op'>|</span> {
-        <span class='ident'>register</span>(<span class='ident'>token</span>::<span class='ident'>intern</span>(<span class='ident'>name</span>),
-                 <span class='ident'>NormalTT</span>(<span class='kw'>box</span> <span class='ident'>BasicMacroExpander</span> {
-                     <span class='ident'>expander</span>: <span class='ident'>fn_</span>,
-                     <span class='ident'>span</span>: <span class='prelude-val'>None</span>
-                 },
-                 <span class='prelude-val'>None</span>));
-    };
-    <span class='ident'>reg</span>(<span class='string'>&quot;phf_map&quot;</span>, <span class='ident'>expand_phf_map</span>);
-    <span class='ident'>reg</span>(<span class='string'>&quot;phf_set&quot;</span>, <span class='ident'>expand_phf_set</span>);
-    <span class='ident'>reg</span>(<span class='string'>&quot;phf_ordered_map&quot;</span>, <span class='ident'>expand_phf_ordered_map</span>);
-    <span class='ident'>reg</span>(<span class='string'>&quot;phf_ordered_set&quot;</span>, <span class='ident'>expand_phf_ordered_set</span>);
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>macro_registrar</span>(<span class='ident'>reg</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Registry</span>) {
+    <span class='ident'>reg</span>.<span class='ident'>register_macro</span>(<span class='string'>&quot;phf_map&quot;</span>, <span class='ident'>expand_phf_map</span>);
+    <span class='ident'>reg</span>.<span class='ident'>register_macro</span>(<span class='string'>&quot;phf_set&quot;</span>, <span class='ident'>expand_phf_set</span>);
+    <span class='ident'>reg</span>.<span class='ident'>register_macro</span>(<span class='string'>&quot;phf_ordered_map&quot;</span>, <span class='ident'>expand_phf_ordered_map</span>);
+    <span class='ident'>reg</span>.<span class='ident'>register_macro</span>(<span class='string'>&quot;phf_ordered_set&quot;</span>, <span class='ident'>expand_phf_ordered_set</span>);
 }
 
 <span class='kw'>struct</span> <span class='ident'>Entry</span> {
     <span class='ident'>key_str</span>: <span class='ident'>InternedString</span>,
-    <span class='ident'>key</span>: <span class='kw-2'>@</span><span class='ident'>Expr</span>,
-    <span class='ident'>value</span>: <span class='kw-2'>@</span><span class='ident'>Expr</span>
+    <span class='ident'>key</span>: <span class='ident'>Gc</span><span class='op'>&lt;</span><span class='ident'>Expr</span><span class='op'>&gt;</span>,
+    <span class='ident'>value</span>: <span class='ident'>Gc</span><span class='op'>&lt;</span><span class='ident'>Expr</span><span class='op'>&gt;</span>
 }
 
 <span class='kw'>struct</span> <span class='ident'>HashState</span> {
@@ -876,8 +857,8 @@
     <span class='ident'>MacExpr</span>::<span class='ident'>new</span>(<span class='macro'>quote_expr</span><span class='macro'>!</span>(<span class='ident'>cx</span>, ::<span class='ident'>phf</span>::<span class='ident'>PhfOrderedSet</span> { <span class='ident'>map</span>: <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>map</span> }))
 }
 
-<span class='kw'>fn</span> <span class='ident'>create_slice_expr</span>(<span class='ident'>vec</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='kw-2'>@</span><span class='ident'>Expr</span><span class='op'>&gt;</span>, <span class='ident'>sp</span>: <span class='ident'>Span</span>) <span class='op'>-&gt;</span> <span class='kw-2'>@</span><span class='ident'>Expr</span> {
-    <span class='kw-2'>@</span><span class='ident'>Expr</span> {
+<span class='kw'>fn</span> <span class='ident'>create_slice_expr</span>(<span class='ident'>vec</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Gc</span><span class='op'>&lt;</span><span class='ident'>Expr</span><span class='op'>&gt;&gt;</span>, <span class='ident'>sp</span>: <span class='ident'>Span</span>) <span class='op'>-&gt;</span> <span class='ident'>Gc</span><span class='op'>&lt;</span><span class='ident'>Expr</span><span class='op'>&gt;</span> {
+    <span class='kw'>box</span> (<span class='ident'>GC</span>) <span class='ident'>Expr</span> {
         <span class='ident'>id</span>: <span class='ident'>ast</span>::<span class='ident'>DUMMY_NODE_ID</span>,
         <span class='ident'>node</span>: <span class='ident'>ExprVec</span>(<span class='ident'>vec</span>),
         <span class='ident'>span</span>: <span class='ident'>sp</span>
@@ -921,11 +902,13 @@
     </div>
 
     <script>
-        var rootPath = "../../../";
-        var currentCrate = "phf_mac";
+        window.rootPath = "../../../";
+        window.currentCrate = "phf_mac";
+        window.playgroundUrl = "";
     </script>
     <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
+    
     <script async src="../../../search-index.js"></script>
 </body>
 </html>
